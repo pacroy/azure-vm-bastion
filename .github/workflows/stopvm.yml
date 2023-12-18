@@ -9,14 +9,14 @@
     id-token: write
   
   env:
-    RESOURCE_GROUP_NAME: ${{vars.RESOURCE_GROUP_NAME}}
-    VM_NAME: ${{vars.VM_NAME}}
-    BASTION_NAME: ${{vars.BASTION_NAME}}
-    PUBLIC_IP_NAME: ${{vars.PUBLIC_IP_NAME}}
-    VNET_NAME: ${{vars.VNET_NAME}}
-    AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-    AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-    AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+    RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
+    VM_NAME: ${{ secrets.VM_NAME }}
+    BASTION_NAME: ${{ secrets.BASTION_NAME }}
+    PUBLIC_IP_NAME: ${{ secrets.PUBLIC_IP_NAME }}
+    VNET_NAME: ${{ secrets.VNET_NAME }}
+    AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   
   jobs:
     stop_vm:
