@@ -1,0 +1,20 @@
+---
+name: "Lint Code Base"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: read
+  statuses: write
+
+jobs:
+  linter:
+    name: "Lint Code Base"
+    uses: pacroy/gh-common-workflows/.github/workflows/wf_linter.yml@v1
+    secrets: inherit
