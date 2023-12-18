@@ -1,0 +1,41 @@
+---
+  name: Stop VM
+  concurrency: start_stop_vm
+  
+  on:
+    workflow_dispatch:
+  
+  permissions:
+    id-token: write
+  
+  env:
+    RESOURCE_GROUP_NAME: ${{vars.RESOURCE_GROUP_NAME}}
+    VM_NAME: ${{vars.VM_NAME}}
+    BASTION_NAME: ${{vars.BASTION_NAME}}
+    PUBLIC_IP_NAME: ${{vars.PUBLIC_IP_NAME}}
+    VNET_NAME: ${{vars.VNET_NAME}}
+    AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+    AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+    AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+  
+  jobs:
+    stop_vm:
+      name: Stop VM
+      runs-on: ubuntu-latest
+      environment: azure
+      steps:
+        - name: Azure Login
+          uses: azure/login@v1
+          with:
+            client-id: ${{ env.AZURE_CLIENT_ID }}
+            tenant-id: ${{ env.AZURE_TENANT_ID }}
+            subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        - name: Stop VM
+          shell: bash
+          run: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az vm stop --resource-group "${RESOURCE_GROUP_NAME}" --name "${VM_NAME}" --no-wait
+        - name: Delete Bastion
+          shell: bash
+          run: |
+            az network bastion delete --resource-group "${RESOURCE_GROUP_NAME}" --name "${BASTION_NAME}"
