@@ -1,0 +1,45 @@
+---
+  name: Start VM
+  concurrency: start_stop_vm
+  
+  on:
+    workflow_dispatch:
+  
+  permissions:
+    id-token: write
+  
+  env:
+    RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
+    VM_NAME: ${{ secrets.VM_NAME }}
+    BASTION_NAME: ${{ secrets.BASTION_NAME }}
+    PUBLIC_IP_NAME: ${{ secrets.PUBLIC_IP_NAME }}
+    VNET_NAME: ${{ secrets.VNET_NAME }}
+    AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  
+  jobs:
+    start_vm:
+      name: Start VM
+      runs-on: ubuntu-latest
+      environment: azure
+      steps:
+        - name: Azure Login
+          uses: azure/login@v1
+          with:
+            client-id: ${{ env.AZURE_CLIENT_ID }}
+            tenant-id: ${{ env.AZURE_TENANT_ID }}
+            subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        - name: Start VM
+          shell: bash
+          run: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az vm start --resource-group "${RESOURCE_GROUP_NAME}" --name "${VM_NAME}" --no-wait
+        - name: Create Bastion
+          shell: bash
+          run: |
+            az network bastion create \
+            --resource-group "${RESOURCE_GROUP_NAME}" \
+            --name "${BASTION_NAME}" \
+            --public-ip-address "${PUBLIC_IP_NAME}" \
+            --vnet-name "${VNET_NAME}"
