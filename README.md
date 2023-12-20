@@ -23,7 +23,7 @@ Terraform Template to deploy Windows VM with Bastion Host on Azure
    - `ARM_CLIENT_SECRET` - don't forget to mark as 'sensitive'
    - `ARM_TENANT_ID`
    - `ARM_SUBSCRIPTION_ID`
-   
+
 6. Click `+ New run` and then `Start run`.
 7. The plan should run successfully. Review the plan then click `Confirm & apply` and then `Confirm plan`.
 8. All resources should be created successfully
@@ -53,7 +53,7 @@ terraform apply -var "resource_group_name=rg-your-resource-group" -var "suffix=v
 
 1. Go to States and open the latest one.
 2. Input the following into the filter to get username and password resoectively:
-   
+
    - `.outputs.windows_virtual_machine_admin_username.value`
    - `.outputs.windows_virtual_machine_admin_password.value`
 
@@ -67,8 +67,8 @@ echo "PASSWORD: $(terraform output -raw windows_virtual_machine_admin_password)"
 ## Connect to VM
 
 1. Open [Azure Portal](https://portal.azure.com/). Go to your virtual machine and connect to the VM using Bastion.
-
-2. Create another local admin account and log in using the new account next time. Do not use sysadmin account.
+2. Update Windows.
+3. Create another local admin account and log in using the new account next time. Do not use sysadmin account.
 
 ## Turn VM Off and On
 
@@ -127,7 +127,7 @@ You can customize using the the following variables:
 
 ### EncryptionAtHost is not enabled
 
-If you get the error `'Microsoft.Compute/EncryptionAtHost' feature is not enabled for this subscription` when apply. 
+If you get the error `'Microsoft.Compute/EncryptionAtHost' feature is not enabled for this subscription` when apply.
 
 1. Execute the following command to enable this feature in your subscription:
 
@@ -142,7 +142,7 @@ watch az feature show --namespace Microsoft.Compute --name EncryptionAtHost
 ```
 
 3. Execute this command to ensure the change is propagated:
-   
+
 ```sh
 az provider register -n Microsoft.Compute
 ```
