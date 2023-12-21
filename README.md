@@ -97,7 +97,7 @@ terraform apply -var "resource_group_name=rg-your-resource-group" -var "suffix=v
 To use GitHub Actions to turn on or off the virtual machine, follow this instruction.
 
 1. Go to your service principal and [configure a new OIDC federated crendential](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure) with the scope to your repository's environment named `azure`.
-2. Retrieve variables.
+2. Retrieve variables from CLI or from Azure portal:
 
 ```sh
 echo "RESOURCE_GROUP_NAME  : $(terraform output -raw resource_group_name)"
@@ -110,8 +110,8 @@ echo "AZURE_TENANT_ID      : $(terraform output -raw azurerm_tenant_id)"
 echo "AZURE_SUBSCRIPTION_ID: $(terraform output -raw azurerm_subscription_id)"
 ```
 
-3. Go to your repository settings and create environment `azure`.
-4. Add all variables from 2 as environment variables.
+3. Go to your repository settings and create environment `azure`, if not existed.
+4. Add all variables from 2 as environment secrets.
 5. Run the workflow `Start VM` or `Stop VM` as you wish.
 
 ## Customizations
