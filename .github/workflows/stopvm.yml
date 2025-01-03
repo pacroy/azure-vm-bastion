@@ -38,4 +38,6 @@
         - name: Delete Bastion
           shell: bash
           run: |
-            az network bastion delete --resource-group "${RESOURCE_GROUP_NAME}" --name "${BASTION_NAME}"
+            az network bastion delete --yes \
+              --resource-group "${RESOURCE_GROUP_NAME}" \
+              --name "${BASTION_NAME}"
