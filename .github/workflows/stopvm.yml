@@ -33,7 +33,7 @@
         - name: Stop VM
           shell: bash
           run: |
-            az config set extension.use_dynamic_install=yes_without_prompt
+            az config set extension.dynamic_install_allow_preview=true
             az vm stop --resource-group "${RESOURCE_GROUP_NAME}" --name "${VM_NAME}" --no-wait
         - name: Delete Bastion
           shell: bash
