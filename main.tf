@@ -147,7 +147,7 @@ resource "azurerm_network_security_group" "default" {
 }
 
 resource "azurerm_network_interface" "main" {
-  enable_accelerated_networking = true
+  accelerated_networking_enabled = true
 
   ip_configuration {
     name                          = "ipconfig1"
