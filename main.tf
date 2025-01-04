@@ -73,14 +73,14 @@ resource "azurerm_virtual_network" "main" {
 
   subnet {
     address_prefixes = cidrsubnet(local.vnet_cidr, 8, 1)
-    name           = "AzureBastionSubnet"
-    security_group = azurerm_network_security_group.bastion.id
+    name             = "AzureBastionSubnet"
+    security_group   = azurerm_network_security_group.bastion.id
   }
 
   subnet {
     address_prefixes = cidrsubnet(local.vnet_cidr, 8, 0)
-    name           = "default"
-    security_group = azurerm_network_security_group.default.id
+    name             = "default"
+    security_group   = azurerm_network_security_group.default.id
   }
 
 }
