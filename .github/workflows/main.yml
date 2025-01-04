@@ -49,6 +49,8 @@ jobs:
           terraform validate
       - name: Plan
         shell: bash
+        env:
+          ARM_SUBSCRIPTION_ID: ${{ env.AZURE_SUBSCRIPTION_ID }}
         run: |
           terraform plan -out tfplan \
           -var "resource_group_name=${RESOURCE_GROUP_NAME}" \
