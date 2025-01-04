@@ -2,17 +2,18 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.56.0"
+      version = "~> 4.14.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "~> 3.5.1"
+      version = "~> 3.6.3"
     }
   }
-  required_version = "~> 1.3"
+  required_version = "~> 1.10.0"
 }
 
 provider "azurerm" {
+  resource_provider_registrations = "none"
   features {}
 }
 
@@ -38,7 +39,7 @@ variable "bastion" {
 
 module "naming" {
   source  = "Azure/naming/azurerm"
-  version = "~> 0.3.0"
+  version = "~> 0.4.2"
   suffix  = [var.suffix]
 }
 
@@ -71,15 +72,15 @@ resource "azurerm_virtual_network" "main" {
   resource_group_name = data.azurerm_resource_group.main.name
 
   subnet {
-    address_prefix = cidrsubnet(local.vnet_cidr, 8, 1)
-    name           = "AzureBastionSubnet"
-    security_group = azurerm_network_security_group.bastion.id
+    address_prefixes = [cidrsubnet(local.vnet_cidr, 8, 1)]
+    name             = "AzureBastionSubnet"
+    security_group   = azurerm_network_security_group.bastion.id
   }
 
   subnet {
-    address_prefix = cidrsubnet(local.vnet_cidr, 8, 0)
-    name           = "default"
-    security_group = azurerm_network_security_group.default.id
+    address_prefixes = [cidrsubnet(local.vnet_cidr, 8, 0)]
+    name             = "default"
+    security_group   = azurerm_network_security_group.default.id
   }
 
 }
@@ -146,7 +147,7 @@ resource "azurerm_network_security_group" "default" {
 }
 
 resource "azurerm_network_interface" "main" {
-  enable_accelerated_networking = true
+  accelerated_networking_enabled = true
 
   ip_configuration {
     name                          = "ipconfig1"
