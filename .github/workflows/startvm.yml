@@ -38,7 +38,7 @@
         - name: Create Bastion
           shell: bash
           run: |
-            az network bastion create --yes \
+            az network bastion create \
             --resource-group "${RESOURCE_GROUP_NAME}" \
             --name "${BASTION_NAME}" \
             --public-ip-address "${PUBLIC_IP_NAME}" \
