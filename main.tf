@@ -198,12 +198,12 @@ resource "azurerm_windows_virtual_machine" "main" {
   priority            = "Regular"
   provision_vm_agent  = true
   resource_group_name = data.azurerm_resource_group.main.name
-  size                = "Standard_D4s_v3"
+  size                = "Standard_D4as_v5"
 
   source_image_reference {
     offer     = "windows-11"
     publisher = "microsoftwindowsdesktop"
-    sku       = "win11-22h2-pro"
+    sku       = "win11-24h2-pro"
     version   = "latest"
   }
 
