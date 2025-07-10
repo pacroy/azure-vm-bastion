@@ -52,24 +52,3 @@ jobs:
         shell: bash
         run: |
           terraform validate
-      - name: Plan
-        shell: bash
-        env:
-          ARM_SUBSCRIPTION_ID: ${{ env.AZURE_SUBSCRIPTION_ID }}
-        run: |
-          terraform plan -out tfplan \
-          -var "resource_group_name=${RESOURCE_GROUP_NAME}" \
-          -var "suffix=partest"
-      - name: Create Job Summary
-        shell: bash
-        run: |
-          {
-            echo "<details>"
-            echo "<summary>Terraform Plan</summary>"
-            echo
-            echo "\`\`\`console"
-            terraform show -no-color tfplan
-            echo "\`\`\`"
-            echo
-            echo "</details>"
-          } >> "$GITHUB_STEP_SUMMARY"
